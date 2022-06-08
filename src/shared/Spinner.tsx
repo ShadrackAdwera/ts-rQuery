@@ -1,0 +1,27 @@
+import { ReactElement } from 'react';
+import { Spinner, Text } from '@chakra-ui/react';
+import { useIsFetching, useIsMutating } from 'react-query';
+
+const LoadingSpinner = (): ReactElement => {
+  const fetching = useIsFetching();
+  const mutating = useIsMutating();
+  const display = fetching || mutating ? 'inherit' : 'none';
+  return (
+    <Spinner
+      thickness='4px'
+      speed='0.65s'
+      emptyColor='olive.200'
+      color='olive.800'
+      role='status'
+      position='fixed'
+      zIndex='9999'
+      top='50%'
+      left='50%'
+      transform='translate(-50%, -50%)'
+      display={display}
+    >
+      <Text display='none'>Loading...</Text>
+    </Spinner>
+  );
+};
+export default LoadingSpinner;
