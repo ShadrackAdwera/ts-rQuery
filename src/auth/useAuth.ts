@@ -62,4 +62,20 @@ export const useAuth = (): IUseUser => {
       });
     }
   };
+
+  const signIn = async (email: string, password: string): Promise<void> => {
+    await apiAuthCall('/login', email, password);
+  };
+  const signUp = async (
+    username: string,
+    email: string,
+    role: Roles,
+    password: string
+  ): Promise<void> => {
+    await apiAuthCall('/sign-up', email, password, username, role);
+  };
+  const signOut = () => {
+    //clear local storage
+  };
+  return { signIn, signUp, signOut };
 };
