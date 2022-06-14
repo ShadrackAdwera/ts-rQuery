@@ -4,7 +4,7 @@ import { axiosInstance } from '../shared/axios/axiosInstance';
 import { Roles, User, NewUser } from '../shared/types';
 import { useCustomToast } from '../hooks/useCustomToast';
 
-interface IUseUser {
+interface IUseAuth {
   signUp: (
     username: string,
     email: string,
@@ -19,7 +19,7 @@ type UserResponseType = { user: User };
 type ErrorResponseType = { message: string };
 type AuthResponseType = UserResponseType | ErrorResponseType;
 
-export const useAuth = (): IUseUser => {
+export const useAuth = (): IUseAuth => {
   const toast = useCustomToast();
   const apiAuthCall = async (
     endpoint: string,
