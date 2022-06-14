@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { axiosInstance } from '../shared/axios/axiosInstance';
 import { Roles, User, NewUser } from '../shared/types';
 import { useCustomToast } from '../hooks/useCustomToast';
+import { useUser } from '../hooks/useUser';
 
 interface IUseAuth {
   signUp: (
@@ -21,6 +22,7 @@ type AuthResponseType = UserResponseType | ErrorResponseType;
 
 export const useAuth = (): IUseAuth => {
   const toast = useCustomToast();
+  const { updateUser, clearUser } = useUser();
   const apiAuthCall = async (
     endpoint: string,
     email: string,
@@ -55,7 +57,7 @@ export const useAuth = (): IUseAuth => {
       return;
     }
     if ('user' in data && 'token' in data.user) {
-      //update cache using useQueryClient
+      updateUser(data.user);
       toast({
         title: `Signed in as ${username}`,
         status: 'success',
@@ -75,7 +77,7 @@ export const useAuth = (): IUseAuth => {
     await apiAuthCall('/sign-up', email, password, username, role);
   };
   const signOut = () => {
-    //clear local storage
+    clearUser();
   };
   return { signIn, signUp, signOut };
 };
